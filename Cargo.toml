@@ -1,0 +1,25 @@
+[package]
+name = "wasm_chess"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+getrandom = {version = "0.2.15", features = ["js"]}
+wasm-bindgen = "0.2.92"
+
+[dependencies.web-sys]
+version = "0.3.70"
+features = [
+  "CanvasRenderingContext2d",
+  "HtmlCanvasElement",
+  "Window",
+  "Document",
+  "console",
+  "EventTarget",
+  "MouseEvent",
+  "ImageData",
+]
+
+
+[lib]
+crate-type = ["cdylib"]
