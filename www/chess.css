@@ -1,0 +1,33 @@
+:root {
+	--chess-colour: white;
+	--board-white: transparent;
+	--board-black: #00000044;
+	--board-size: 650px;
+}
+
+#chessboard {
+	font-size: calc(var(--board-size) / 8);
+	line-height: calc(var(--board-size) / 8);
+
+	td {
+		height: calc(var(--board-size) / 8);
+		width: calc(var(--board-size) / 8);
+		text-align: center;
+	}
+
+	tr {
+		background-color: var(--board-white);
+	}
+
+	tr:nth-child(2n) {
+		td:nth-child(2n) {
+			background-color: var(--board-black);
+		}
+	}
+
+	tr:nth-child(2n-1) {
+		td:nth-child(2n-1) {
+			background-color: var(--board-black);
+		}
+	}
+}
