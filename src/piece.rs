@@ -9,18 +9,8 @@ use crate::engine::js;
 
 #[path = "test/piece_test.rs"] mod test;
 
-fn validate_rook(board: [[char; 8]; 8], piece_x: usize, piece_y: usize, move_x: usize, move_y: usize) -> bool
+fn make_ranges(piece_x: usize, piece_y: usize, move_x: usize, move_y: usize) -> (Vec<usize>, Vec<usize>)
 {
-	// We can only move in X or Y so if we moved in both then return false
-	// This also catches neither, but that's not a move so would be invalid anyway!
-	if ! (piece_x.abs_diff(move_x) != 0).bitxor( piece_y.abs_diff(move_y) != 0 )
-	{
-		return false
-	}
-	// TODO: Check if the move is unblocked (but not the last square)
-
-	// For each square between start & end - non-inclusive (in a straight line)
-
 	let mut range_x = piece_x..piece_x+1;
 	let mut range_y = piece_y..piece_y+1;
 
@@ -36,23 +26,41 @@ fn validate_rook(board: [[char; 8]; 8], piece_x: usize, piece_y: usize, move_x: 
 	    },
 	    std::cmp::Ordering::Equal => 
 	    {
-	    	match piece_y.cmp(&move_y)
-	    	{
-		        std::cmp::Ordering::Less => // Moving down
-		        {
-		        	range_y = (piece_y+1)..move_y;
-		        },
-		        std::cmp::Ordering::Greater => // Moving up
-		        {
-		        	range_y = (move_y+1)..piece_y;
-		        },
-		        std::cmp::Ordering::Equal =>
-		        {
-		        	return false
-		        },
-		    }
+	    	// Nothing
 	    }
 	}
+	match piece_y.cmp(&move_y)
+	{
+        std::cmp::Ordering::Less => // Moving down
+        {
+        	range_y = (piece_y+1)..move_y;
+        },
+        std::cmp::Ordering::Greater => // Moving up
+        {
+        	range_y = (move_y+1)..piece_y;
+        },
+        std::cmp::Ordering::Equal =>
+        {
+        	// Nothing
+        },
+    }
+	
+	(range_x.collect(), range_y.collect())
+}
+
+
+
+fn validate_rook(board: [[char; 8]; 8], piece_x: usize, piece_y: usize, move_x: usize, move_y: usize) -> bool
+{
+	// We can only move in X or Y so if we moved in both then return false
+	// This also catches neither, but that's not a move so would be invalid anyway!
+	if ! (piece_x.abs_diff(move_x) != 0).bitxor( piece_y.abs_diff(move_y) != 0 )
+	{
+		return false
+	}
+	// For each square between start & end - non-inclusive (in a straight line)
+
+	let (range_x, range_y) = make_ranges(piece_x, piece_y, move_x, move_y);
 	for x in range_x
 	{
 		for y in range_y.clone()
@@ -63,8 +71,9 @@ fn validate_rook(board: [[char; 8]; 8], piece_x: usize, piece_y: usize, move_x: 
 				return false
 			}
 		}
-	}	
+	}
 	true
+	// TODO: Castling
 }
 fn validate_bishop(board: [[char; 8]; 8], piece_x: usize, piece_y: usize, move_x: usize, move_y: usize) -> bool
 {
@@ -73,8 +82,19 @@ fn validate_bishop(board: [[char; 8]; 8], piece_x: usize, piece_y: usize, move_x
 	{
 		return false
 	}
-	// TODO: Check if the move is unblocked (but not the last square)
-	false
+	let (range_x, range_y) = make_ranges(piece_x, piece_y, move_x, move_y);
+	// Genuinely not a clue why .rev(), but it fixed everything being backwards?
+	for (i, x) in range_x.iter().rev().enumerate()
+	{
+		let x = x.to_owned();
+		let y = range_y.get(i).unwrap().to_owned();
+		if board[y][x] != ' '
+		{
+			console_log!("Invalid move, square {} is occupied", board::get_square_name_from_usize(x, y));
+			return false
+		}
+	}
+	true
 }
 
 /// Validate whether a move is possible using the board's current state, which square we're moving from, and which square we're moving to.  
