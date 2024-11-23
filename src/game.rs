@@ -1,5 +1,6 @@
 use wasm_bindgen::prelude::*;
 
+#[doc(inline)]
 use crate::{board, engine::js, piece};
 
 const DELTA_MILLISECONDS: f64 = 75.;
@@ -145,7 +146,7 @@ impl Game
 		// For checking what team the selected piece belongs to
 		let selected_char = self.board[rel_y][rel_x];
 
-		// The element we clicked on
+		// The web_sys::Element we clicked on
 		let Some(clicked) = get_clicked(
 			chessboard, 
 			u32::try_from(rel_x).expect(":("), 
@@ -154,39 +155,69 @@ impl Game
 			console_log!("Failed to get clicked at {rel_x}-{rel_y}");
 			return
 		};
-		// If we're selecting & selecting the right colour
-		if self.state == State::NewTurn // if we're selecting
-			&& piece::get_colour(selected_char) == Some(self.turn) // clicked the right colour
-			&& self.selected.is_none() // and haven't already selected anything
+		
+		// If we clicked our own colour
+		if piece::get_colour(selected_char) == Some(self.turn)
 		{
-			// Update the selected guy's classname to "selected"
-			clicked.set_class_name("selected");   // highlight the square
-			self.selected = Some((rel_x, rel_y)); // save which we selected
-			self.state = State::Selected;         // and change our state
-			
-		}
+			// Unselect anything currently selected
+			board::unselect_all(chessboard);
 
-		else if self.state == State::Selected
-		{
-			// Did we click on either an empty space or other player's piece
-			if piece::get_colour(selected_char) != Some(self.turn)
+			// if the new selected is different from the current selected
+			if self.selected != Some((rel_x, rel_y))
 			{
-				let Some(selected) = self.selected
-				else 
-				{	// Reset
-					console_log!("Nothing selected??"); 
-					self.state = State::NewTurn; 
-					return
-				};
-				// TODO: Check if its a valid move
-				//     * If not, flash something red maybe?
-				self.make_move(selected.0, selected. 1, rel_x, rel_y);
-				self.refresh_board(chessboard);
-
-				board::unselect_all(chessboard);
-				self.selected = None;
+				clicked.set_class_name("selected");   // highlight the square
+				self.selected = Some((rel_x, rel_y)); // save which we selected
+				self.state = State::Selected;         // and change our state
+				return
 			}
+			// Else
+			self.selected = None;
+			return                                    // and don't do anything else
 		}
+
+		match self.state
+		{
+		    State::NewTurn => 
+		    {
+		    	// nothing thanks
+		    },
+		    State::Selected =>
+		    {		    	
+		    	// If we didn't click on another one of our own pieces
+				if piece::get_colour(selected_char) != Some(self.turn)
+				{
+					let Some(selected) = self.selected
+					else 
+					{	// Reset
+						console_log!("Nothing selected??"); 
+						self.state = State::NewTurn; 
+						return
+					};
+					// If it isn't a valid turn
+					if ! piece::validate_move(
+						self.board,
+						selected.0,
+						selected.1, 
+						rel_x, 
+						rel_y, 
+						"" // TODO: This will need to be the move JUST taken
+					)
+					{
+						console_log!("Invalid move");
+						// NO thanks
+						return 
+					}
+			
+					self.make_move(selected.0, selected. 1, rel_x, rel_y);
+					self.refresh_board(chessboard);
+
+					board::unselect_all(chessboard);
+					self.selected = None;
+				}
+		    },
+		    State::Moving => todo!(), // For our planned recap animation
+		}
+					
 		// console_log!("Mouse pressed {} {}", x, y);
 		// console_log!("Square [{},{}] {}", rel_x, rel_y, self.board[rel_y][rel_x]);
 	}

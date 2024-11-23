@@ -3,6 +3,11 @@
 	--board-white: transparent;
 	--board-black: #cba6f722;
 	--board-size: 650px;
+
+	counter-reset: chess-row;
+	counter-set: chess-row 9;
+
+	counter-reset: chess-column;
 }
 
 #chessboard {
@@ -11,13 +16,45 @@
 	color: var(--chess-colour);
 
 	td {
-		height: calc(var(--board-size) / 8);
+		/* Because text line-height and regular height are different by 2px?? */
+		height: calc((var(--board-size) / 8) + 2px);
 		width: calc(var(--board-size) / 8);
 		text-align: center;
 	}
 
 	tr {
 		background-color: var(--board-white);
+		position: relative;
+
+		/* Add a row num to each row */
+		&::before {
+			position: absolute;
+			width: calc(var(--board-size) / 8);
+			left: calc(-1 * (var(--board-size) / 8));
+			text-align: center;
+			opacity: 5%;
+			content: counter(chess-row);
+		}
+
+		counter-increment: chess-row -1;
+	}
+
+	/* Add a column num to each col in the first row */
+	tr:nth-child(1) {
+		td {
+			position: relative;
+		}
+
+		td::before {
+			position: absolute;
+			text-align: center;
+			width: 100%;
+			top: -100%;
+			left: 0;
+			opacity: 5%;
+			content: counter(chess-column, upper-alpha);
+			counter-increment: chess-column;
+		}
 	}
 
 	tr:nth-child(2n) {

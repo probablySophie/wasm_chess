@@ -7,6 +7,13 @@ pub fn get_square_name(x: i32, y: i32) -> String
 	letter.to_string() + &num.to_string()
 }
 
+pub fn get_square_name_from_usize(x: usize, y: usize) -> String
+{
+	let letter = ('A'..='H').nth(x).unwrap();
+	let num = 8-y;
+	letter.to_string() + &num.to_string()
+}
+
 pub fn unselect_all(chessboard: &web_sys::Element)
 {
 	let selected = chessboard.get_elements_by_class_name("selected");
