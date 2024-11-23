@@ -30,4 +30,22 @@
 			background-color: var(--board-black);
 		}
 	}
+
+	.selected {
+		position: relative;
+
+		&::after {
+			content: "";
+			position: absolute;
+			left: -1px;
+			top: -1px;
+			width: 100%;
+			height: 100%;
+			border: 1px solid var(--chess-colour);
+		}
+	}
+
+	.ghost {
+		opacity: 30%;
+	}
 }

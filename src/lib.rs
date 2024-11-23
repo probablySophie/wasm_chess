@@ -10,6 +10,8 @@ extern crate web_sys;
 #[macro_use]
 mod engine;
 
-mod world;
+mod piece;
+mod board;
 
+#[allow(clippy::module_name_repetitions)]
 mod game;
