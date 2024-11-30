@@ -10,6 +10,7 @@ init().then(() => {
 	board.addEventListener("mousemove", (event) => mouse_event(game, event));
 	board.addEventListener("mousedown", (event) => mouse_event(game, event));
 });
+
 function frame(game)
 {
 	let now = (performance.timeOrigin + performance.now());

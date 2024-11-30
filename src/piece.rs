@@ -9,8 +9,10 @@ use crate::engine::js;
 
 #[path = "test/piece_test.rs"] mod test;
 
+#[allow(clippy::range_plus_one)]
 fn make_ranges(piece_x: usize, piece_y: usize, move_x: usize, move_y: usize) -> (Vec<usize>, Vec<usize>)
 {
+	// Not ..= because then the match would also have to ..=
 	let mut range_x = piece_x..piece_x+1;
 	let mut range_y = piece_y..piece_y+1;
 
@@ -44,7 +46,7 @@ fn make_ranges(piece_x: usize, piece_y: usize, move_x: usize, move_y: usize) -> 
         	// Nothing
         },
     }
-	
+	// collect the range into Vecs, because we can't return the ranges
 	(range_x.collect(), range_y.collect())
 }
 
@@ -73,7 +75,6 @@ fn validate_rook(board: [[char; 8]; 8], piece_x: usize, piece_y: usize, move_x: 
 		}
 	}
 	true
-	// TODO: Castling
 }
 fn validate_bishop(board: [[char; 8]; 8], piece_x: usize, piece_y: usize, move_x: usize, move_y: usize) -> bool
 {
@@ -235,16 +236,16 @@ fn validate_pawn(board: [[char; 8]; 8], piece_x: usize, piece_y: usize, move_x: 
 	}
 
 	// En passant
+	// TODO: En passant!?!
 
 	// Was the most recent move a pawn?
 	if ! most_recent_move.starts_with(['♙', '♟'])
 	{
 		return false // Because if not, no en passant thank you
 	}
+	// TODO: Was the most recent move 2 spaces?
 
-	// TODO: En passant!?!
-	// TODO: Check if most_recent_move was a pawn moving 2 spaces
+	// TODO: Are we trying to move into the space skipped over?
 	
-	// TODO: We're going to need to pass in the most recent move because en passant requires that the pawn being taken literally JUST did a two square move
 	todo!()
 }

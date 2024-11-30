@@ -193,6 +193,22 @@ impl Game
 						self.state = State::NewTurn; 
 						return
 					};
+					
+					// Castling special edge-case
+					if self.board[selected.1][selected.0] == '♔'
+					|| self.board[selected.1][selected.0] == '♚'
+					{
+						// TODO: Must only be moving left/right
+						// TODO: Must have tried to move 2 left/right
+						// TODO: Neither the rook nor king may have moved before
+						// 			* Check if still in original spot
+						// 			* Then check move history
+						// TODO: All spaces between rook & king must be vacant
+						// TODO: Move king 2 to left or right
+						// TODO: Move left/right rook into the space the king skipped over
+						// https://en.wikipedia.org/wiki/Castling
+					}
+					
 					// If it isn't a valid turn
 					if ! piece::validate_move(
 						self.board,
@@ -208,8 +224,10 @@ impl Game
 						return 
 					}
 			
-					self.make_move(selected.0, selected. 1, rel_x, rel_y);
+					self.make_move(selected.0, selected.1, rel_x, rel_y);
 					self.refresh_board(chessboard);
+				
+					// TODO: If a pawn moved all the way to the other side of the board then it needs to be possible to promote them
 
 					board::unselect_all(chessboard);
 					self.selected = None;
