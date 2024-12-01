@@ -7,10 +7,10 @@ Chess, but with WASM and the unicode chess characters
 
 You can read more at [my website](https://sophie.coffee/fun/unicode-chess/)!
 
-♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ Multiplayer Chess with WASM!  
-♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟  
-♙ ♙ ♙ ♙ ♙ ♙ ♙ ♙  
-♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖  
+♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ Multiplayer  
+♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟ Chess  
+♙ ♙ ♙ ♙ ♙ ♙ ♙ ♙ with  
+♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖ WASM!  
 
 ## The Plan
 
@@ -55,15 +55,17 @@ Then just `. run.sh` (if you're on Linux...)
 - [x] WASM connect in & show the pieces
 - [x] Make it possible to move pieces
 - [ ] Move validation
-- [ ] GitHub pages for it pls *(statically host the `www/index.html`?) (and link it here)*
+- [x] GitHub pages for it pls *(statically host the `www/index.html`?) (and link it here)*
 - [ ] Make it possible to *take* pieces  
 - [ ] https://en.wikipedia.org/wiki/Rules_of_chess  
-- [ ] Multiplayer with URL encoded [move histories](https://en.wikipedia.org/wiki/Chess_notation) for sharing (long algebraic probably)?  
+- [ ] Semi-Multiplayer with URL encoded [move histories](https://en.wikipedia.org/wiki/Chess_notation) for sharing 
+  * Long algebraic probably  
 - [ ] Show the move histories from the URL  
 
 
 ## Future Fancy Features
 
+- [ ] An option to undo the move you just did (aimed at mobile misclicks)
 - [ ] Confirmation if someone wins
 - [ ] If in check, all moves that don't get you out of check are invalid
   - [ ] Visual highlighting that you're in check?
@@ -73,6 +75,6 @@ Then just `. run.sh` (if you're on Linux...)
 - [ ] A little red flash or something when an invalid move is attempted?  
 - [ ] Little ghosts showing all valid moves (with arrows for valid in-between moves)  
 - [ ] Flip the horsey on the left so it looks prettier  
-  - [ ] Would require tracking the left horsey down from all it's previous moves
+  * This would require tracking the left horsey down from all it's previous moves
 - [ ] Something subtle to mark who's turn it is?
 - [ ] A share button that uses [navigator.share()](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share) from the [Web Share API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API) *(if available)*
