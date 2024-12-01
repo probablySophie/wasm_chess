@@ -46,3 +46,33 @@ Then just `. run.sh` (if you're on Linux...)
 ## Resources and Stuff
 
 * If you want this, but smaller and already done - then [Tolido Nano-Chess](https://nanochess.org/chess4.html) exists!  
+
+
+
+
+## The Todo
+
+- [x] WASM connect in & show the pieces
+- [x] Make it possible to move pieces
+- [ ] Move validation
+- [ ] GitHub pages for it pls *(statically host the `www/index.html`?) (and link it here)*
+- [ ] Make it possible to *take* pieces  
+- [ ] https://en.wikipedia.org/wiki/Rules_of_chess  
+- [ ] Multiplayer with URL encoded [move histories](https://en.wikipedia.org/wiki/Chess_notation) for sharing (long algebraic probably)?  
+- [ ] Show the move histories from the URL  
+
+
+## Future Fancy Features
+
+- [ ] Confirmation if someone wins
+- [ ] If in check, all moves that don't get you out of check are invalid
+  - [ ] Visual highlighting that you're in check?
+- [ ] Make sure the text line-height and table row-height are *exactly* the same (they currently aren't)
+- [ ] Add async so we can make a 200ms per move recap of where we are?
+  * Or figure out how to use `setInterval` from WASM?
+- [ ] A little red flash or something when an invalid move is attempted?  
+- [ ] Little ghosts showing all valid moves (with arrows for valid in-between moves)  
+- [ ] Flip the horsey on the left so it looks prettier  
+  - [ ] Would require tracking the left horsey down from all it's previous moves
+- [ ] Something subtle to mark who's turn it is?
+- [ ] A share button that uses [navigator.share()](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share) from the [Web Share API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API) *(if available)*
