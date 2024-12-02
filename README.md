@@ -1,9 +1,8 @@
 
 # WASM_CHESS
-
+<img align="right" src="./.meta/Logo.svg" align="left" height="128" width="128" alt="Logo">
 Chess, but with WASM and the unicode chess characters
 
-****
 
 You can read more at [my website](https://sophie.coffee/fun/unicode-chess/)!
 
