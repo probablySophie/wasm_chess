@@ -4,7 +4,7 @@
 Chess, but with WASM and the unicode chess characters
 
 
-You can read more at [my website](https://sophie.coffee/fun/unicode-chess/)!
+You can read more at [my website](https://sophie.coffee/fun/unicode-chess/) and there's a [live version](https://probablysophie.github.io/wasm_chess/) you can play!
 
 ♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜ Multiplayer  
 ♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟ Chess  
