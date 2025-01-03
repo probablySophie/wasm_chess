@@ -1,7 +1,7 @@
 
-# WASM_CHESS
+# WASM/Unicode Chess
 <img align="right" src="./.meta/Logo.svg" align="left" height="128" width="128" alt="Logo">
-Chess, but with WASM and the unicode chess characters
+Chess, but with WASM and the [unicode chess characters](https://en.wikipedia.org/wiki/Chess_symbols_in_Unicode)!
 
 
 You can read more at [my website](https://sophie.coffee/fun/unicode-chess/) and there's a [live version](https://probablysophie.github.io/wasm_chess/) you can play!
@@ -15,9 +15,6 @@ You can read more at [my website](https://sophie.coffee/fun/unicode-chess/) and 
 
 **To make this semi-multiplayer!**  
 > There will hopefully eventually be a *share* button that creates a link with the current game-state encoded in the URL queries as movement notation: `♙F2f4`.
-
-**To make GitHub host this for me**
-> I just need to make a GitHub action that statically hosts the `www/` folder
 
 **To make this cute**  
 > I want this to be minimal and just kind of nice looking, I think I'm doing a decent job so far.  
